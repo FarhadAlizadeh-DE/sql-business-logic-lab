@@ -15,3 +15,11 @@ Compute:
 - `wrong.sql` demonstrates common mistakes (row multiplication + wrong unit).
 - `correct.sql` computes conversion safely.
 - `verify.sql` shows a per-customer converted flag you can eyeball.
+
+## Why `wrong.sql` is wrong
+The query counts joined rows instead of customers.
+Joining to orders and order_items multiplies rows, so the numerator and denominator
+no longer represent people. The resulting rate can look reasonable but is meaningless.
+
+## Rule of thumb
+Funnel metrics must be computed at the entity grain (customers), not at the joined-row level.
