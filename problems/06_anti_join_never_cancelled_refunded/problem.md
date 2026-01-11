@@ -12,3 +12,10 @@ If the subquery can return NULL, `NOT IN` can evaluate to UNKNOWN and return zer
 Safer patterns:
 - `NOT EXISTS`
 - `LEFT JOIN ... WHERE joined_key IS NULL`
+
+## Why `NOT IN` can fail
+If the subquery returns a NULL, then `x NOT IN (...)` becomes UNKNOWN for every x,
+so the WHERE clause filters out everything.
+
+## Rule of thumb
+Use `NOT EXISTS` (or a LEFT JOIN anti-join) for "never had" questions.
