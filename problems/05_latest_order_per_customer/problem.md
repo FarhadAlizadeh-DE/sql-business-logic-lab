@@ -19,3 +19,12 @@ Window functions (ROW_NUMBER) express this cleanly.
 - `wrong.sql` shows the MAX + join-back tie problem.
 - `correct.sql` uses ROW_NUMBER with a tie-break.
 - `verify.sql` shows ranked orders per customer.
+
+## Why `wrong.sql` is wrong
+`MAX(order_ts)` identifies the latest timestamp, but if multiple rows share that timestamp,
+joining back returns multiple orders. Without a deterministic tie-break, you do not have
+a single “latest order”.
+
+## Correct patterns
+- Use `ROW_NUMBER()` with an explicit ORDER BY tie-break.
+- Or use `ORDER BY ... LIMIT 1` per customer via a lateral join (Postgres), but window functions are more portable.
