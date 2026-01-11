@@ -19,3 +19,11 @@ Definitions:
 - `wrong.sql`: rolling window over only existing days (skips missing dates).
 - `correct.sql`: generates a full date series and then computes rolling 7-day revenue.
 - `verify.sql`: shows the daily series used as input.
+
+## Why `wrong.sql` is misleading
+`ROWS BETWEEN 6 PRECEDING AND CURRENT ROW` operates on row count, not calendar time.
+If some days have no data, the rolling window silently stretches over a longer period.
+
+## Correct approach
+Generate a complete date series, fill missing days with zero revenue,
+and then apply the rolling window so "7 days" truly means 7 days.
