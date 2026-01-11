@@ -33,3 +33,12 @@ INSERT INTO order_items (order_item_id, order_id, product_id, qty, unit_price) V
 -- Tie case for Problem 05: same timestamp, different order_id
 INSERT INTO orders (order_id, customer_id, order_ts, status)
 VALUES (1005, 1, '2025-03-05 09:00:00', 'refunded');
+
+-- Tie case for Problem 11: Cora matches Ben's paid/shipped revenue (67.99)
+INSERT INTO orders (order_id, customer_id, order_ts, status)
+VALUES (1006, 3, '2025-03-06 10:00:00', 'paid');
+
+INSERT INTO order_items (order_item_id, order_id, product_id, qty, unit_price)
+VALUES
+  (8, 1006, 101, 1, 29.99),
+  (9, 1006, 103, 2, 19.00);
